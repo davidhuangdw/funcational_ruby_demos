@@ -1,3 +1,22 @@
+## Actor model
+
+* http://adit.io/posts/2013-05-15-Locks,-Actors,-And-STM-In-Pictures.html
+
+* why actor model?
+    * multi-threads
+    * yet share things without lock code
+    * yet don't manage/schedule threads pool by my own
+
+* how?
+    * each actor object is a thread
+    * let each object use locks by itself:
+        * queueing messages
+    * threads will be scheduled/managed by library
+
+* how to design code into actors
+    * mutations on the same state should inside the same actor object
+    * pass self(Actor.current) to the mutation_actor, let mutation_actor to call me after it mutates state
+
 ## Monads
 
 * why monads? -- make code easy to read/write in the constraints of FP
@@ -6,9 +25,10 @@
     3. yet make code easy to read and write
 
 * how monad achieve them:
-    1. pass function/code to a monad object, rather than call functions
-    2. chainable
-    3. each time it will create a new monad object of same monad type, rather than mutate value
+    1. wrap: wrap the value inside a decorator, so that we can add extra features to it
+    2. callback: pass function/code to a monad object, rather than call functions
+    3. chainable: always return the same monad type
+    4. persistent: each time it creates a new monad to wrap new value, rather than mutate old value
 
 ### Three useful monads: writer, reader, state
 

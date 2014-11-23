@@ -1,9 +1,22 @@
 
 class MaybeMonad
   def initialize(*args)
-    raise "Please use MaybeMonad.create(value)"
+    raise "Please use Maybe(value)"
   end
   def open; @value end
+  def try(&blk)
+    fmap(&blk)
+  end
+  def create(value)
+    Maybe(value)
+  end
+
+  include Comparable
+  def <=>(other)
+    @value <=> value
+  end
+  protected
+  attr_reader :value
 end
 
 class Just < MaybeMonad
@@ -22,11 +35,7 @@ class Nothing < MaybeMonad
 end
 
 
-class MaybeMonad
-  def self.create(value)
-    value.nil? ? Nothing.new : Just.new(value)
-  end
-  def create(value)
-    MaybeMonad.create(value)
-  end
+def Maybe(value)
+  value.nil? ? Nothing.new : Just.new(value)
 end
+
