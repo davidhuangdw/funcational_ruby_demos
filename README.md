@@ -1,3 +1,14 @@
+## Lazy Enumerator in ruby
+
+* we can make a monad,
+  * it stores:
+    1. original_collection
+    2. transformation proc
+  * every time(map, select, reject, drop):
+    * create a new monad, with:
+      1. the same original_collection
+      2. adjusted transformation proc
+
 ## Actor model
 
 * http://adit.io/posts/2013-05-15-Locks,-Actors,-And-STM-In-Pictures.html
